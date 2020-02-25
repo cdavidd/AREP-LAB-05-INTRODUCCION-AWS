@@ -1,8 +1,6 @@
 package edu.escuelaing.arep.servidor;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -10,14 +8,23 @@ import java.util.concurrent.Executors;
 
 public class HttpServer {
 
-    private static ServerSocket serverSocket = null;
-    private static PrintWriter out = null;
-    private static Socket clientSocket = null;
-    private static BufferedReader in = null;
+    private ServerSocket serverSocket = null;
+    private Socket clientSocket = null;
     private boolean running;
+    HandlerClient handlerClient= null;
+
+    /**
+     * Inicia el servidor para empezar a escuchar
+     * @param args
+     * @throws IOException 
+     */
+    public static void main(String[] args){
+        new HttpServer().iniciarServidor();
+    }
 
     public HttpServer(){
         int port = getPort();
+        handlerClient = new HandlerClient();
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
@@ -33,29 +40,18 @@ public class HttpServer {
         while(running){
             try {
                 System.out.println("Listo para recibir ...");
-                clientSocket = serverSocket.accept();
+                clientSocket = serverSocket.accept();   
+                Thread peticion = new Thread( () -> {
+                    handlerClient.request(clientSocket);                                                                                
+                });
+                pool.execute(peticion);
+
             } catch (IOException e) {
-                System.err.println("Accept failed.");
+                System.err.println("Accept failed. "+e);
                 System.exit(1);
             }
-
-            
-
-            
-
-        }
-
+        }    
     }
-
-    /**
-     * Inicia el servidor para empezar a escuchar
-     * @param args
-     * @throws IOException 
-     */
-    public static void main(String[] args){
-        new HttpServer().iniciarServidor();
-    }
-
 
     /**
      * Puerto a utilizar
