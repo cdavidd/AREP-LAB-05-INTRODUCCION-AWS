@@ -31,6 +31,7 @@ public class HandlerImpl implements PeticionFile {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+        //System.out.println("Path: " +path);
         File archivo = new File(path);
         if (archivo.exists()) {
             try {

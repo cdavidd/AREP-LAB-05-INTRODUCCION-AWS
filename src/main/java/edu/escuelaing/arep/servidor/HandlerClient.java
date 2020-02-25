@@ -15,18 +15,23 @@ public class HandlerClient {
     private PrintWriter out = null;
     private BufferedReader in = null;
     private PeticionFile pF = new HandlerImpl();
-    
+    private Socket clientSocket = null;
 
-    public void request(Socket clientSocket){
-        System.out.println("entraaaaaaaaaaaaaaaaaaaaaaa  clientSocket");
+    public HandlerClient(Socket clientSocket) {
+        this.clientSocket = clientSocket;
+
+    }
+
+    public void request() {
+
         String inputLine, archivo;
-        archivo = "/";
+        archivo = "index.html";
         try {
-            System.out.println("entraaaaaaaaaaaaaaaaaaaaaaa  -");
+
             out = new PrintWriter(clientSocket.getOutputStream(), true);
-            System.out.println("entraaaaaaaaaaaaaaaaaaaaaaa  out");
+
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            System.out.println("entraaaaaaaaaaaaaaaaaaaaaaa  in");
+
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Recibi: " + inputLine);
                 if (!in.ready()) {
@@ -45,31 +50,35 @@ public class HandlerClient {
                     break;
                 }
             }
+
             String[] pathType = getType(archivo);
             // System.out.println("Archivo: " + archivo);
-            if (pathType[1].equals("html")  || pathType[1].equals("js")) {
-                System.out.println("entraaaaaaaaaaaaaaaaaaaaaaa  html js");
+            if (pathType[1].equals("html") || pathType[1].equals("js")) {
+
                 pF.handlerFile(pathType[0], clientSocket);
             } else if (pathType[1].equals("img")) {
-                System.out.println("entraaaaaaaaaaaaaaaaaaaaaaa  img");
+
                 pF.handlerImg(pathType[0], clientSocket);
             }
+
+            // in.close();
             clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("request error: "+e);
+            System.out.println("request error: " + e);
         } catch (HandlerException e) {
-			// TODO Auto-generated catch block
+            // TODO Auto-generated catch block
             e.printStackTrace();
-            System.out.println("request error: "+e);
+            System.out.println("request error: " + e);
         }
-        
+
     }
 
     /**
      * Analiza el archivo para devolver el path y que tipo es
+     * 
      * @param file
-     * @return 
+     * @return
      */
     private String[] getType(String file) {
         String path = "src/main/resources/";

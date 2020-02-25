@@ -11,7 +11,8 @@ public class HttpServer {
     private ServerSocket serverSocket = null;
     private Socket clientSocket = null;
     private boolean running;
-    HandlerClient handlerClient= null;
+    private HandlerClient handlerClient= null;
+    private ExecutorService pool;
 
     /**
      * Inicia el servidor para empezar a escuchar
@@ -24,7 +25,7 @@ public class HttpServer {
 
     public HttpServer(){
         int port = getPort();
-        handlerClient = new HandlerClient();
+        pool = Executors.newFixedThreadPool(10);
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
@@ -35,21 +36,21 @@ public class HttpServer {
 
     public void iniciarServidor (){
         running = true;
-        ExecutorService pool = Executors.newFixedThreadPool(10);
-
         while(running){
             try {
                 System.out.println("Listo para recibir ...");
                 clientSocket = serverSocket.accept();   
-                Thread peticion = new Thread( () -> {
-                    handlerClient.request(clientSocket);                                                                                
-                });
-                pool.execute(peticion);
-
             } catch (IOException e) {
                 System.err.println("Accept failed. "+e);
                 System.exit(1);
             }
+
+            handlerClient = new HandlerClient(clientSocket);
+            Thread peticion = new Thread( () -> {
+                
+                handlerClient.request();                                                                                
+            });
+            pool.execute(peticion);
         }    
     }
 
