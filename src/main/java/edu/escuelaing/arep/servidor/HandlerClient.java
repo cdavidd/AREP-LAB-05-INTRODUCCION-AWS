@@ -27,11 +27,8 @@ public class HandlerClient {
         String inputLine, archivo;
         archivo = "index.html";
         try {
-
             out = new PrintWriter(clientSocket.getOutputStream(), true);
-
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Recibi: " + inputLine);
                 if (!in.ready()) {
@@ -62,7 +59,7 @@ public class HandlerClient {
             }
 
             // in.close();
-            clientSocket.close();
+            // clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("request error: " + e);

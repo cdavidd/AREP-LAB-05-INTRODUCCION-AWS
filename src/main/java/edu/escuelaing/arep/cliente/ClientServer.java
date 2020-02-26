@@ -15,6 +15,7 @@ public class ClientServer implements Runnable {
             this.url = new URL(urll);
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
+            System.out.println("MalformedURLException: " + e);
             e.printStackTrace();
         }
     }
@@ -51,6 +52,7 @@ public class ClientServer implements Runnable {
                 // succes++;
             }
             succes++;
+            System.out.println("successsssssss: " + succes + " " + " fail : " + fail);
         } catch (final IOException x) {
             System.err.println(x);
             fail++;

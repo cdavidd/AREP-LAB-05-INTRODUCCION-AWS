@@ -31,7 +31,7 @@ public class HandlerImpl implements PeticionFile {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        //System.out.println("Path: " +path);
+        // System.out.println("Path: " +path);
         File archivo = new File(path);
         if (archivo.exists()) {
             try {
@@ -41,6 +41,7 @@ public class HandlerImpl implements PeticionFile {
                 ImageIO.write(image, "PNG", ArrBytes);
                 writeimg.writeBytes("HTTP/1.1 200 OK \r\n" + "Content-Type: image/png \r\n" + "\r\n");
                 writeimg.write(ArrBytes.toByteArray());
+                clientSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -72,6 +73,9 @@ public class HandlerImpl implements PeticionFile {
                     // System.out.println(temp);
                     outputLine += temp;
                 }
+                // clientSocket.close();
+                out.println(outputLine);
+                clientSocket.close();
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch
                 e.printStackTrace();
@@ -79,7 +83,7 @@ public class HandlerImpl implements PeticionFile {
                 // TODO Auto-generated
                 e.printStackTrace();
             }
-            out.println(outputLine);
+
         } else {
             out.println("HTTP/1.1 404 Not Found \r\nContent-Type: text/html \r\n\r\n <!DOCTYPE html> <html>"
                     + "<head><title>404</title></head>" + "<body> <h1>404 Not Found " + archivo.getName()
