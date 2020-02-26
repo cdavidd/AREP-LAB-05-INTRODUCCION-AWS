@@ -11,19 +11,20 @@ public class HttpServer {
     private ServerSocket serverSocket = null;
     private Socket clientSocket = null;
     private boolean running;
-    private HandlerClient handlerClient= null;
+    private HandlerClient handlerClient = null;
     private ExecutorService pool;
 
     /**
      * Inicia el servidor para empezar a escuchar
+     * 
      * @param args
-     * @throws IOException 
+     * @throws IOException
      */
-    public static void main(String[] args){
+    public static void main(String[] args) {
         new HttpServer().iniciarServidor();
     }
 
-    public HttpServer(){
+    public HttpServer() {
         int port = getPort();
         pool = Executors.newFixedThreadPool(10);
         try {
@@ -34,29 +35,30 @@ public class HttpServer {
         }
     }
 
-    public void iniciarServidor (){
+    public void iniciarServidor() {
         running = true;
-        while(running){
+        while (running) {
             try {
                 System.out.println("Listo para recibir ...");
-                clientSocket = serverSocket.accept();   
+                clientSocket = serverSocket.accept();
             } catch (IOException e) {
-                System.err.println("Accept failed. "+e);
+                System.err.println("Accept failed. " + e);
                 System.exit(1);
             }
 
             handlerClient = new HandlerClient(clientSocket);
-            Thread peticion = new Thread( () -> {
-                
-                handlerClient.request();                                                                                
+            Thread peticion = new Thread(() -> {
+
+                handlerClient.request();
             });
             pool.execute(peticion);
-        }    
+        }
     }
 
     /**
      * Puerto a utilizar
-     * @return 
+     * 
+     * @return
      */
     static int getPort() {
         if (System.getenv("PORT") != null) {
