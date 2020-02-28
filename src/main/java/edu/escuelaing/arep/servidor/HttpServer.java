@@ -9,10 +9,11 @@ import java.util.concurrent.Executors;
 public class HttpServer {
 
     private ServerSocket serverSocket = null;
-    private Socket clientSocket = null;
+    // private Socket clientSocket = null;
     private boolean running;
     private HandlerClient handlerClient = null;
     private ExecutorService pool;
+    private int productores = 10;
 
     /**
      * Inicia el servidor para empezar a escuchar
@@ -26,7 +27,7 @@ public class HttpServer {
 
     public HttpServer() {
         int port = getPort();
-        pool = Executors.newFixedThreadPool(10);
+        pool = Executors.newFixedThreadPool(productores);
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
@@ -37,21 +38,22 @@ public class HttpServer {
 
     public void iniciarServidor() {
         running = true;
+
         while (running) {
             try {
+                Socket clientSocket = null;
                 System.out.println("Listo para recibir ...");
                 clientSocket = serverSocket.accept();
+                handlerClient = new HandlerClient(clientSocket);
+                Runnable peticion = () -> {
+                    handlerClient.request();
+                };
+                pool.execute(peticion);
+                //peticion.start();
             } catch (IOException e) {
                 System.err.println("Accept failed. " + e);
                 System.exit(1);
             }
-
-            handlerClient = new HandlerClient(clientSocket);
-            Thread peticion = new Thread(() -> {
-
-                handlerClient.request();
-            });
-            pool.execute(peticion);
         }
     }
 

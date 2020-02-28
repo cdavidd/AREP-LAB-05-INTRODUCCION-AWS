@@ -23,7 +23,6 @@ public class HandlerClient {
     }
 
     public void request() {
-
         String inputLine, archivo;
         archivo = "index.html";
         try {
@@ -32,6 +31,16 @@ public class HandlerClient {
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Recibi: " + inputLine);
                 if (!in.ready()) {
+                    String[] pathType = getType(archivo);
+                    // System.out.println("Archivo: " + archivo);
+                    if (pathType[1].equals("html") || pathType[1].equals("js")) {
+        
+                        pF.handlerFile(pathType[0], clientSocket);
+                    } else if (pathType[1].equals("img")) {
+        
+                        pF.handlerImg(pathType[0], clientSocket);
+                    }
+                    
                     break;
                 }
                 if (inputLine.contains("GET")) {
@@ -44,22 +53,10 @@ public class HandlerClient {
                         archivo = "index.html";
                     }
                     // System.out.println("Archivo: " + archivo);
-                    break;
                 }
             }
-
-            String[] pathType = getType(archivo);
-            // System.out.println("Archivo: " + archivo);
-            if (pathType[1].equals("html") || pathType[1].equals("js")) {
-
-                pF.handlerFile(pathType[0], clientSocket);
-            } else if (pathType[1].equals("img")) {
-
-                pF.handlerImg(pathType[0], clientSocket);
-            }
-
-            // in.close();
-            // clientSocket.close();
+            in.close();
+            clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("request error: " + e);
