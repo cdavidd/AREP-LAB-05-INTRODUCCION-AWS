@@ -21,17 +21,14 @@ public class HandlerImpl implements PeticionFile {
 
     @Override
     public void handlerImg(String path, Socket clientSocket) throws HandlerException {
-        // TODO Auto-generated method stub
         PrintWriter out = null;
         OutputStream clientOutput = null;
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             clientOutput = clientSocket.getOutputStream();
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        // System.out.println("Path: " +path);
         File archivo = new File(path);
         if (archivo.exists()) {
             try {
@@ -41,7 +38,6 @@ public class HandlerImpl implements PeticionFile {
                 ImageIO.write(image, "PNG", ArrBytes);
                 writeimg.writeBytes("HTTP/1.1 200 OK \r\n" + "Content-Type: image/png \r\n" + "\r\n");
                 writeimg.write(ArrBytes.toByteArray());
-                clientSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -59,28 +55,22 @@ public class HandlerImpl implements PeticionFile {
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
 
         File archivo = new File(path);
         String temp, outputLine = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n" + "\r\n";
-        // System.out.println("outputLine " + archivo.exists() + " path " + path);
         if (archivo.exists()) {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(archivo));
                 while ((temp = br.readLine()) != null) {
-                    // System.out.println(temp);
                     outputLine += temp;
                 }
-                // clientSocket.close();
                 out.println(outputLine);
-                clientSocket.close();
+                //clientSocket.close();
             } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch
                 e.printStackTrace();
             } catch (IOException e) {
-                // TODO Auto-generated
                 e.printStackTrace();
             }
 
