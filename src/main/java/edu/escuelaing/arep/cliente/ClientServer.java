@@ -7,9 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ClientServer implements Runnable {
 
     private URL url;
-    private static int threads = 5;
-    private static int succes = 0;
-    private static int fail = 0;
+    private static int threads = 400;
     static AtomicInteger succesA = new AtomicInteger(0);
     static AtomicInteger failA = new AtomicInteger(0);
 
@@ -37,7 +35,6 @@ public class ClientServer implements Runnable {
                 System.out.println("InterruptedException: " + e);
             }
         }
-        //System.out.println("succes: " + succes + " " + " fail : " + fail);
         System.out.println("succes: " + succesA + " " + " fail : " + failA);
 
     }
@@ -48,19 +45,12 @@ public class ClientServer implements Runnable {
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             String inputLine = null;
             while ((inputLine = reader.readLine()) != null) {
-                //System.out.println(inputLine);
-                succes++;
+                // System.out.println(inputLine);
             }
-            succes++;
             succesA.addAndGet(1);
-            //System.out.println("successsssssss: " + succes + " " + " fail : " + fail);
-            //System.out.println("succexxxxxxxxxx: " + succesA + " " + " fail : " + failA);
         } catch (final IOException x) {
             System.err.println(x);
             failA.addAndGet(1);
-            fail++;
-            //System.out.println("successsssssss: " + succes + " " + " fail : " + fail);
-            //System.out.println("succexxxxxxxxxx final: " + succesA + " " + " fail : " + failA);
         }
     }
 }

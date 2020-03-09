@@ -19,7 +19,6 @@ public class HandlerClient {
 
     public HandlerClient(Socket clientSocket) {
         this.clientSocket = clientSocket;
-
     }
 
     public void request() {
@@ -29,18 +28,18 @@ public class HandlerClient {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             while ((inputLine = in.readLine()) != null) {
-                System.out.println("Recibi: " + inputLine);
+                // System.out.println("Recibi: " + inputLine);
                 if (!in.ready()) {
                     String[] pathType = getType(archivo);
                     // System.out.println("Archivo: " + archivo);
                     if (pathType[1].equals("html") || pathType[1].equals("js")) {
-        
+
                         pF.handlerFile(pathType[0], clientSocket);
                     } else if (pathType[1].equals("img")) {
-        
+
                         pF.handlerImg(pathType[0], clientSocket);
                     }
-                    
+
                     break;
                 }
                 if (inputLine.contains("GET")) {
