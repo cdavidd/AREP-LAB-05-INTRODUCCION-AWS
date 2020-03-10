@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ClientServer implements Runnable {
 
     private URL url;
-    private static int threads = 400;
+    private static int threads = 500;
     static AtomicInteger succesA = new AtomicInteger(0);
     static AtomicInteger failA = new AtomicInteger(0);
 
@@ -21,7 +21,7 @@ public class ClientServer implements Runnable {
     }
 
     public static void main(final String[] args) {
-        ClientServer cs = new ClientServer("http://localhost:35000/index.html");
+        ClientServer cs = new ClientServer(args[0]);
         Thread[] peticiones = new Thread[threads];
         for (int i = 0; i < threads; i++) {
             peticiones[i] = new Thread(cs);

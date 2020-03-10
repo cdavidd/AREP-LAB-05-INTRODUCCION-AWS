@@ -41,7 +41,7 @@ public class HttpServer {
         while (running) {
             Socket clientSocket = null;
             try {
-                System.out.println("Listo para recibir ...");
+                // System.out.println("Listo para recibir ...");
                 clientSocket = serverSocket.accept();
                 HandlerClient handlerClient = new HandlerClient(clientSocket);
                 Runnable peticion = () -> {

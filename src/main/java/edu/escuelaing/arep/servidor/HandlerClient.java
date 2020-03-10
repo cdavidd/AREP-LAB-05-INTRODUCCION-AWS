@@ -43,8 +43,8 @@ public class HandlerClient {
                     break;
                 }
                 if (inputLine.contains("GET")) {
-                    System.out
-                            .println(inputLine.indexOf("/") + " " + inputLine.indexOf(" ", inputLine.indexOf(" ") + 1));
+                    // System.out.println(inputLine.indexOf("/") + " " + inputLine.indexOf(" ",
+                    // inputLine.indexOf(" ") + 1));
                     archivo = inputLine.substring(inputLine.indexOf("/") + 1,
                             inputLine.indexOf(" ", inputLine.indexOf(" ") + 1));
                     if (archivo.length() == 0) {
