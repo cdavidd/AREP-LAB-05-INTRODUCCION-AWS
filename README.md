@@ -59,7 +59,7 @@ heroku/7.37.0 win32-x64 node-v12.4.0
   `mvn exec:java -Dexec.mainClass="edu.escuelaing.arep.cliente.ClientServer" -Dexec.args="<url> <numero de peticiones>"`
 
   - Ejemplo
-    `mvn exec:java -Dexec.mainClass="edu.escuelaing.arep.cliente.ClientServer" -Dexec.args="http://localhost:35000/index.html 10"`
+    `mvn exec:java -Dexec.mainClass="edu.escuelaing.arep.cliente.ClientServer" -Dexec.args="https://shielded-coast-58752.herokuapp.com/index.html 10"`
 
 ### Ejecutando las pruebas
 
@@ -80,6 +80,10 @@ Se probo el servicio del cliente desde la maquina de aws con respeto al tiempo d
 ## Generar javaDocs
 
 Para generar el javaDocs utilizaremos `mvn javadoc:javadoc`
+
+## Docuemento del Diseño
+
+- [Diseño](https://github.com/cdavidd/AREP-LAB-05-INTRODUCCION-AWS/blob/master/arep_lab_05_intro_aws.pdf)
 
 ## Docuemento del taller
 
