@@ -6,10 +6,11 @@ public class HandlerException extends Exception {
      *
      */
     private static final long serialVersionUID = 1L;
-    
+
     /**
-     * Exception 
-     * @param msg 
+     * Exception
+     * 
+     * @param msg mensaje
      */
     public HandlerException(String msg) {
         super(msg);

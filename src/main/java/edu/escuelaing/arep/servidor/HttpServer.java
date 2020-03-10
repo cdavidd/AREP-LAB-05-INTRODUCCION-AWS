@@ -17,13 +17,15 @@ public class HttpServer {
     /**
      * Inicia el servidor para empezar a escuchar
      * 
-     * @param args
-     * @throws IOException
+     * @param args argumentos
      */
     public static void main(String[] args) {
         new HttpServer().iniciarServidor();
     }
 
+    /**
+     * Constructor
+     */
     public HttpServer() {
         int port = getPort();
         pool = Executors.newFixedThreadPool(productores);
@@ -35,6 +37,9 @@ public class HttpServer {
         }
     }
 
+    /**
+     * Metodo para empezar a escuchar a los clientes
+     */
     public void iniciarServidor() {
         running = true;
 

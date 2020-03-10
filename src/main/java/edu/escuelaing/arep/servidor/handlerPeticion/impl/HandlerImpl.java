@@ -19,6 +19,12 @@ import edu.escuelaing.arep.servidor.handlerPeticion.PeticionFile;
 
 public class HandlerImpl implements PeticionFile {
 
+    /**
+     * controlador de imagen
+     * 
+     * @param path         direccion
+     * @param clientSocket socket del cliente
+     */
     @Override
     public void handlerImg(String path, Socket clientSocket) throws HandlerException {
         PrintWriter out = null;
@@ -49,6 +55,12 @@ public class HandlerImpl implements PeticionFile {
 
     }
 
+    /**
+     * Controlador de archivo
+     * 
+     * @param path         patch
+     * @param clientSocket socket del cliente
+     */
     @Override
     public void handlerFile(String path, Socket clientSocket) throws HandlerException {
         PrintWriter out = null;
@@ -67,7 +79,7 @@ public class HandlerImpl implements PeticionFile {
                     outputLine += temp;
                 }
                 out.println(outputLine);
-                //clientSocket.close();
+                // clientSocket.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {

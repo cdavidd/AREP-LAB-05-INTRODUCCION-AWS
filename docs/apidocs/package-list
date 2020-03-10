@@ -1,0 +1,5 @@
+edu.escuelaing.arep.cliente
+edu.escuelaing.arep.servidor
+edu.escuelaing.arep.servidor.exception
+edu.escuelaing.arep.servidor.handlerPeticion
+edu.escuelaing.arep.servidor.handlerPeticion.impl

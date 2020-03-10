@@ -17,10 +17,18 @@ public class HandlerClient {
     private PeticionFile pF = new HandlerImpl();
     private Socket clientSocket = null;
 
+    /**
+     * Constructor que recibe un socket para atender el cliente
+     * 
+     * @param clientSocket socket del cliente
+     */
     public HandlerClient(Socket clientSocket) {
         this.clientSocket = clientSocket;
     }
 
+    /**
+     * Metodo que resuelve la peticion del socket cliente
+     */
     public void request() {
         String inputLine, archivo;
         archivo = "index.html";
@@ -70,7 +78,7 @@ public class HandlerClient {
     /**
      * Analiza el archivo para devolver el path y que tipo es
      * 
-     * @param file
+     * @param file archivo
      * @return
      */
     private String[] getType(String file) {
